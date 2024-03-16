@@ -11,34 +11,48 @@ const AddPostsPage = () => {
     event.preventDefault();
 
     // Get the form data
-    const formData = new FormData();
-    formData.append("event_name", document.getElementById("event_name").value);
-    formData.append("date", document.getElementById("date").value);
-    formData.append("time", `${document.getElementById("time").value}:00`);
-    formData.append("location", document.getElementById("location").value);
-    formData.append("user_id", 1);
+    // const formData = new FormData();
+    // formData.append("event_name", document.getElementById("event_name").value);
+    // formData.append("date", document.getElementById("date").value);
+    // formData.append("time", ${document.getElementById("time").value}:00);
+    // formData.append("location", document.getElementById("location").value);
+    // formData.append("user_id", 1);
+    const formData = {
+    event_name:  document.getElementById("event_name").value,
+    date:  document.getElementById("date").value,
+    time:  document.getElementById("time").value,
+    location:  document.getElementById("location").value,
+   image:document.getElementById("image").files[0]
+    }
+
+    console.log(formData);
     
 
     // Send a POST request with the form data
-    let res = await fetch("http://127.0.0.1:8000/frontend/create-post/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=UTF-8",
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
-      },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        document.getElementById(
-          "response"
-        ).innerText = `${json.event_name}   ${json.date}   
-        ${json.time}   ${json.location}   ${json.user_id}  ${json.details} ${json.image}    ${document.getElementById("event_name").value} ${document.getElementById("date").value} ${ document.getElementById("time").value}:00 ${document.getElementById("location").value} ${1}`;
-      })
-      .catch((error) => {
-        document.getElementById("response").innerText = "fg";
+    try {
+      const response = await fetch("http://127.0.0.1:8000/frontend/create-post/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=UTF-8",
+          
+          Authorization: `Bearer ${localStorage.getItem("access")}`,
+        },
+        body: JSON.stringify(formData),
       });
+  
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      const json = await response.json();
+      console.log(json);
+  
+      document.getElementById("response").innerText = `${json.event_name} ${json.date} ${json.time} ${json.location} ${json.user_id} ${json.details} ${json.image} ${document.getElementById("event_name").value} ${document.getElementById("date").value} ${document.getElementById("time").value}:00 ${document.getElementById("location").value} ${1}`;
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById("response").innerText = error;
+    }
      
   };
   return (

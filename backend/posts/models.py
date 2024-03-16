@@ -14,5 +14,5 @@ class Posts(models.Model):
     
     is_liked=models.ManyToManyField(User,related_name="users",blank=True)
     
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(null=True,blank=True)
     

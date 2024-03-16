@@ -72,7 +72,7 @@ class PostSerializers(serializers.ModelSerializer):
     
     
    
-    "user_id" ,
+    
     ]
  # the fields we are going to use in it
         

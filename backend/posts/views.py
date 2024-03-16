@@ -39,9 +39,11 @@ class PostCreateView(APIView):
         
         if serializer.is_valid(raise_exception=True):
             
-            post=serializer.save()
-            post.is_liked.add(request.user)  
-            ic(post)
+            created_post=serializer.save()
+            created_post.is_liked.add(request.user) 
+            created_post.user_id=request.user.pk
+            created_post.save() 
+            ic(created_post)
             return Response({
                 "msg":
                 "Post saved successfully"
@@ -54,7 +56,8 @@ class UserSpecificPostView(generics.ListCreateAPIView):
     permission_classes=[IsAuthenticated]
     serializer_class=PostSerializers
     def get(self,request):
-        return Posts.objects.filter(user=request.user)
+        pass
+    # queryset = Posts.objects.filter(user=request.user)
     
     
     

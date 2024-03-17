@@ -5,7 +5,7 @@ from .models import *
 
 @admin.register(Posts)
 class PostAdmin(admin.ModelAdmin):
-     list_display=["event_name",
+    list_display=["event_name",
     
     "date",
     
@@ -17,4 +17,6 @@ class PostAdmin(admin.ModelAdmin):
     
    
     "user_id" ,
+    "id"
     ]
+    

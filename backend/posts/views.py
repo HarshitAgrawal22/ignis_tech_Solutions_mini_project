@@ -48,7 +48,6 @@ class PostCreateView(APIView):
                 "msg":
                 "Post saved successfully"
             },status=status.HTTP_200_OK)
-        ic(serializer.errors)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
@@ -56,12 +55,39 @@ class UserSpecificPostView(generics.ListCreateAPIView):
     permission_classes=[IsAuthenticated]
     serializer_class=PostSerializers
     def get(self,request):
-        pass
+        posts=Posts.objects.filter(user_id=request.user.id)
+        serializer=PostSerializers(posts,many=True)
+        ic(serializer)
+        return Response(serializer.data)
+        
     # queryset = Posts.objects.filter(user=request.user)
     
     
+class LikesView(APIView):
+    permission_classes=[IsAuthenticated]
     
     
+    def patch(self,request,pk):
+        post=Posts.objects.get(id=pk)
+        serializer=PostSerializers(instance=post,data=request.data,partial=True)
+        if serializer.is_valid():
+            return Response({"msg":"success"})
+        
+        return Response(serializer.errors)
+    
+    
+    def post(self,request):
+        serializer=LikesSerializers(data=request.data)
+        
+        if serializer.is_valid():
+            this_post:Posts= serializer.save()
+            if this_post.is_liked.contains(request.user):this_post.is_liked.remove(request.user)
+            else: this_post.is_liked.add(request.user)
+            this_post.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class UserRegistrationView(APIView):
     def get(self, request):

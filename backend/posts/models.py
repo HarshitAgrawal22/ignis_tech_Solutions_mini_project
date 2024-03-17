@@ -10,9 +10,9 @@ class Posts(models.Model):
     
     location=models.CharField(max_length=50)
     
-    image=models.ImageField(upload_to="posts_images",blank=False,null=False)
+    image=models.URLField(blank=True,null=True)
     
     is_liked=models.ManyToManyField(User,related_name="users",blank=True)
     
     user_id = models.IntegerField(null=True,blank=True)
-    
+   

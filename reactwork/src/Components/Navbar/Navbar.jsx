@@ -3,11 +3,18 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 
+import { Navigate, useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [hamberger, sethamberger] = useState(false);
-
+  const navigate = useNavigate();
   const handlehamberger = () => {
     sethamberger(!hamberger);
+  };
+   const handlePath = () => {
+    navigate("/AddPostsPage");
+  };
+  const MyEventPage = () => {
+    navigate("/YourLike");
   };
   return (
     <div>
@@ -34,9 +41,10 @@ const Navbar = () => {
                 : `flex items-center space-x-12 hidden lg:block lg:flex`
             }
           >
-            <a href="#">Browse Events</a>
-            <a href="#" className="flex items-center">
+            <a href="" onClick={MyEventPage}>Browse My Events</a>
+            <a href="#" className="flex items-center" onClick={handlePath}>
               Host an event{" "}
+
               {hamberger ? "" : <IoIosArrowDown className="pt-1 text-xl" />}
             </a>
             <a href="#" className="flex items-center">
@@ -45,7 +53,7 @@ const Navbar = () => {
             </a>
           </div>
           <div>
-            <a href="#" className="flex items-center ">
+            <a href="#" className="flex items-center " >
               harshverma@
               {hamberger ? "" : <IoIosArrowDown className="pt-1 text-xl" />}
             </a>

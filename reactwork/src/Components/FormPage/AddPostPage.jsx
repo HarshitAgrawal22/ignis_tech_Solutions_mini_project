@@ -22,7 +22,7 @@ const AddPostsPage = () => {
     date:  document.getElementById("date").value,
     time:  document.getElementById("time").value,
     location:  document.getElementById("location").value,
-   image:document.getElementById("image").files[0]
+   image:document.getElementById("image").value
     }
 
     console.log(formData);
@@ -48,7 +48,8 @@ const AddPostsPage = () => {
       const json = await response.json();
       console.log(json);
   
-      document.getElementById("response").innerText = `${json.event_name} ${json.date} ${json.time} ${json.location} ${json.user_id} ${json.details} ${json.image} ${document.getElementById("event_name").value} ${document.getElementById("date").value} ${document.getElementById("time").value}:00 ${document.getElementById("location").value} ${1}`;
+      // document.getElementById("response").innerText = `${json.event_name} ${json.date} ${json.time} ${json.location} ${json.user_id} ${json.details} ${json.image} ${document.getElementById("event_name").value} ${document.getElementById("date").value} ${document.getElementById("time").value}:00 ${document.getElementById("location").value} ${1}`;
+      handlePath()
     } catch (error) {
       console.error("Error:", error);
       document.getElementById("response").innerText = error;
@@ -70,9 +71,9 @@ const AddPostsPage = () => {
 
             <input
               type="text"
+              required
               id="event_name"
-              name="heading"
-              placeholder="username"
+              placeholder="event Name"
               className="flex flex-col w-1/2"
             />
           </div>
@@ -87,9 +88,9 @@ const AddPostsPage = () => {
             <input
               type="date"
               id="date"
-              name="date-time"
+              required
               className="flex flex-col w-1/2"
-              placeholder="Password"
+              placeholder="Date"
             />
           </div>
 
@@ -104,9 +105,9 @@ const AddPostsPage = () => {
             <input
               type="time"
               id="time"
-              name="date-time"
+              required
               className="flex flex-col w-1/2"
-              placeholder="Password"
+              placeholder="Time"
             />
           </div>
 
@@ -121,9 +122,9 @@ const AddPostsPage = () => {
             <input
               type="text"
               id="location"
-              name="date-time"
+              required
               className="flex flex-col w-1/2"
-              placeholder="Password"
+              placeholder="Location"
             />
           </div>
           <div className="flex flex-row">
@@ -135,12 +136,14 @@ const AddPostsPage = () => {
             </label>
 
             <input
-              type="file"
-              accept=".jpg,.jpeg,.png,"
+              type="Url"
+              
               id="image"
-              name="date-time"
+              required
+              
+              
               className="flex flex-col w-1/2"
-              placeholder="Password"
+              placeholder="Url"
             />
           </div>
           <button className="text-orange-600 font-bold">Submit</button>

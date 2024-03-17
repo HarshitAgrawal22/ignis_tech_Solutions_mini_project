@@ -56,30 +56,41 @@ class UserLoginSerializer(serializers.ModelSerializer):
    
 
 
-class PostSerializers(serializers.ModelSerializer):
-    # TODO model serializers give us the advantage to create the meta class 
+# class PostSerializers(serializers.ModelSerializer):
+#     # TODO model serializers give us the advantage to create the meta class 
     
-    class Meta:
-        model=Posts# defining the model for which we have created the api
-        fields=["event_name",
+#     class Meta:
+#         model=Posts# defining the model for which we have created the api
+#         fields=["event_name",
     
-    "date",
+#     "date",
     
-    "time",
+#     "time",
     
-    "location",
+#     "location",
     
     
     
    
     
-    ]
- # the fields we are going to use in it
+#     ]
+#  # the fields we are going to use in it
         
-    
+class PostSerializers(serializers.ModelSerializer):
+    # TODO model serializers give us the advantage to create the meta class 
+    image=serializers.CharField(max_length=50000)
+    class Meta:
+        model=Posts# defining the model for which we have created the api
+        fields="__all__"
+     
         
         
         
 #=========================================================================================================================================================================================================================
    
   
+class LikesSerializers(serializers.ModelSerializer):
+    image=serializers.CharField(max_length=50000)
+    class Meta:
+        model=Posts# defining the model for which we have created the api
+        fields="__all__"
